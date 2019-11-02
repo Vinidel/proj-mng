@@ -1,0 +1,18 @@
+{
+  "extends": "airbnb",
+  "globals": {
+    "jest": true,
+    "beforeAll": true
+  },
+  "rules": {
+    "semi": "warn",
+    "no-shadow": "warn",
+    "no-unused-vars": "warn",
+    "default-case": "warn",
+    "global-require": "warn",
+    "no-use-before-define": "warn",
+    "prefer-destructuring": "warn",
+    "no-param-reassign": "warn",
+    "no-undef": "warn"
+  }
+}

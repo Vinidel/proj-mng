@@ -1,0 +1,8 @@
+{
+  "env": {
+    "JWT_KEY":"secret",
+    "PORT": 8081,
+    "CONNECTION_STRING": "mongodb://localhost/node-shop",
+    "BASE_URL": "http://localhost:8081"
+  }
+}
