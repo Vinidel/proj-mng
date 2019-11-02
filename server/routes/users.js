@@ -1,7 +1,7 @@
 const express = require('express');
+const postUser = require('../handlers/postUser');
 
 const router = express.Router();
-
 router.get('/', (req, res) => {
   res.json([
     {
@@ -10,8 +10,7 @@ router.get('/', (req, res) => {
     },
   ]);
 });
-// router.get('/:id', getOrderDetails);
-// router.post('/', createOrder);
+router.post('/', postUser);
 // router.delete('/:id', deleteOrder);
 
 module.exports = router;

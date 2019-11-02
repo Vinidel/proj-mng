@@ -1,6 +1,6 @@
 const User = require('./user');
 
-describe('User model', () => {
+describe('User', () => {
   beforeEach(() => {});
 
   it('should instantiate the correct user type as ADMIN', () => {

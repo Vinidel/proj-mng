@@ -1,15 +1,15 @@
 const ADMIN_ROLE = 'ADMIN';
 const PM_ROLE = 'PROJECT_MANAGER';
 
-canGetAllProjects = (self) => ({
+const canGetAllProjects = (self) => ({
   getProjects: () => [{ name: 'Project' }, { name: 'Project 2' }],
 });
 
-canGetTheirProjects = (self) => ({
+const canGetTheirProjects = (self) => ({
   getProjects: () => [{ name: 'My Project' }],
 });
 
-canSave = (self) => ({
+const canSave = (self) => ({
   save: () => (self),
 });
 

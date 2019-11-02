@@ -1,27 +1,21 @@
 const morgan = require('morgan');
 const postUser = require('./postUser');
-const User = require('../models/user');
+const User = require('../core/user');
 const { EMAIL_EXISTS } = require('../utils/errors');
 
 const BAD_REQUEST_HTTP_RESPONSE = 400;
 const INTERNAL_SERVER_ERROR = 500;
 const CREATED_HTTP_RESPONSE = 201;
 
-jest.mock('../models/user');
+jest.mock('../core/user');
 jest.mock('morgan');
 
 describe('Post user handler', () => {
   let mockRequest;
   let mockResponse;
-  let mockCreatedUser;
+  let mockCurrentUser;
 
   beforeEach(() => {
-    mockCreatedUser = {
-      name: 'A name',
-      email: 'test@g.com',
-      password: 'securepassworld',
-    };
-
     mockRequest = {
       body: {
         name: 'A name',
@@ -31,6 +25,13 @@ describe('Post user handler', () => {
       },
     };
 
+    mockCurrentUser = {
+      name: 'A name',
+      email: 'test@g.com',
+      password: 'securepassworld',
+      save: jest.fn().mockResolvedValue({ ...mockRequest.body }),
+    };
+
     mockResponse = () => {
       const res = {};
       res.status = jest.fn().mockReturnValue(res);
@@ -38,8 +39,13 @@ describe('Post user handler', () => {
       return res;
     };
 
-    User.save = jest.fn().mockResolvedValue(mockCreatedUser);
-    User.json = jest.fn();
+    User.MakeUser = jest.fn().mockReturnValue(mockCurrentUser);
+  });
+
+  it('should instantiate user with body params', async () => {
+    const res = mockResponse();
+    await postUser(mockRequest, res);
+    expect(User.MakeUser).toHaveBeenCalledWith(mockRequest.body);
   });
 
   it('should return 201 if User is created successfully', async () => {
@@ -51,12 +57,11 @@ describe('Post user handler', () => {
   it('should call res.json with new user if user is created successfully', async () => {
     const res = mockResponse();
     await postUser(mockRequest, res);
-    expect(res.json).toHaveBeenCalledWith(mockCreatedUser);
+    expect(res.json).toHaveBeenCalledWith(mockRequest.body);
   });
 
-
   it('should return a 400 http response if error is known', async () => {
-    User.save = jest.fn().mockRejectedValue({ code: EMAIL_EXISTS });
+    mockCurrentUser.save = jest.fn().mockRejectedValue({ code: EMAIL_EXISTS });
     const res = mockResponse();
     await postUser(mockRequest, res);
     expect(res.status).toHaveBeenCalledWith(BAD_REQUEST_HTTP_RESPONSE);
@@ -70,7 +75,7 @@ describe('Post user handler', () => {
   });
 
   it('should return a 500 http response if error is unknown', async () => {
-    User.save = jest.fn().mockRejectedValue({ message: 'Weird error' });
+    mockCurrentUser.save = jest.fn().mockRejectedValue({ message: 'Weird error' });
     const res = mockResponse();
     await postUser(mockRequest, res);
     expect(res.status).toHaveBeenCalledWith(INTERNAL_SERVER_ERROR);

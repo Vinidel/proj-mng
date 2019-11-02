@@ -1,5 +1,5 @@
 const { userRequestSchema } = require('../utils/validators');
-const User = require('../models/user');
+const User = require('../core/user');
 const { userErrorCodes } = require('../utils/errors');
 
 function isErrorFromValidation(error) {
@@ -14,7 +14,7 @@ function isErrorKnown(error) {
 async function postUser(req, res) {
   try {
     await userRequestSchema.validateAsync(req.body);
-    const newUser = await User.save(req.body);
+    const newUser = await User.MakeUser(req.body).save();
     return res.status(201).json(newUser);
   } catch (error) {
     if (isErrorFromValidation(error)) {
