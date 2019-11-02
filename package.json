@@ -1,0 +1,11 @@
+{
+  "name": "proj-mng",
+  "version": "1.0.0",
+  "description": "Small SPA to Manage Projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Vinicius Delascio Fortunato",
+  "license": "ISC"
+}
