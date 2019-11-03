@@ -1,0 +1,11 @@
+version: '3'
+services:
+  database:
+    image: sameersbn/postgresql:9.4-24
+    ports:
+      - "5436:5432"
+    environment:
+      - DB_USER=fakeuser
+      - DB_PASS=fakepassword
+      - DB_NAME=proj-mng
+    restart: always

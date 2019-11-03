@@ -4,6 +4,7 @@ const cors = require('cors');
 const express = require('express');
 const projectRoutes = require('./routes/projects');
 const userRoutes = require('./routes/users');
+const authorizationRoutes = require('./routes/authorization')
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use('/login', authorizationRoutes);
 app.use('/projects', projectRoutes);
 app.use('/users', userRoutes);
 

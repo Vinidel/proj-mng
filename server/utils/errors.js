@@ -1,4 +1,4 @@
-const EMAIL_EXISTS = 'U01';
+const EMAIL_EXISTS = '23505';
 const userErrorCodes = [EMAIL_EXISTS];
 
 module.exports = {

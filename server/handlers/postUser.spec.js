@@ -1,4 +1,3 @@
-const morgan = require('morgan');
 const postUser = require('./postUser');
 const User = require('../core/user');
 const { EMAIL_EXISTS } = require('../utils/errors');
@@ -8,7 +7,6 @@ const INTERNAL_SERVER_ERROR = 500;
 const CREATED_HTTP_RESPONSE = 201;
 
 jest.mock('../core/user');
-jest.mock('morgan');
 
 describe('Post user handler', () => {
   let mockRequest;
@@ -40,6 +38,10 @@ describe('Post user handler', () => {
     };
 
     User.MakeUser = jest.fn().mockReturnValue(mockCurrentUser);
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('should instantiate user with body params', async () => {

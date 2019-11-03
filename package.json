@@ -5,7 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon ./server/server.js",
-    "test": "jest --config ./jest.config.js"
+    "test": "jest --config ./jest.config.js",
+    "db:init": "sequelize init",
+    "db:user": "sequelize model:generate --name User --attributes name:string,email:string,password:string,role:string",
+    "db:project": "sequelize model:generate --name Project --attributes name:string,description:string,userId:integer",
+    "db:migrate": "sequelize db:migrate",
+    "db:seed:user": "sequelize seed:generate --name User",
+    "db:seed:project": "sequelize seed:generate --name Project",
+    "db:seed:all": "sequelize db:seed:all"
   },
   "author": "Vinicius Delascio Fortunato",
   "license": "ISC",
@@ -22,10 +29,16 @@
   "dependencies": {
     "@hapi/joi": "^16.1.7",
     "babel": "^6.23.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "joi": "^14.3.1",
-    "morgan": "^1.9.1"
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.9.1",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.2",
+    "sequelize-cli": "^5.5.1"
   }
 }
