@@ -1,6 +1,14 @@
 /* eslint-disable no-useless-catch */
 const database = require('../database/models');
 
+async function addProject(project) {
+  try {
+    return database.Project.create(project);
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function getAllProjects() {
   try {
     return database.Project.findAll();
@@ -18,8 +26,6 @@ async function getProjectsByUserId(userId) {
     });
     return projects;
   } catch (error) {
-    console.log('Service', userId)
-    console.log('Service', error)
     throw error;
   }
 }
@@ -30,10 +36,7 @@ async function removeProject(projectId) {
       where: { id: Number(projectId) },
     });
     if (project) {
-      const deletedProject = await database.Project.destroy({
-        where: { id: Number(projectId) },
-      });
-
+      const deletedProject = await project.destroy();
       return deletedProject;
     }
     // THrow error ?
@@ -44,26 +47,25 @@ async function removeProject(projectId) {
 }
 
 async function update(projectId, newProject) {
-  // try {
-  //   const project = await database.Project.findOne({
-  //     where: { id: Number(projectId) },
-  //   });
-  //   if (project) {
-  //     const deletedProject = await database.Project.destroy({
-  //       where: { id: Number(projectId) },
-  //     });
-
-  //     return deletedProject;
-  //   }
-  //   // THrow error ?
-  //   return null;
-  // } catch (error) {
-  //   throw error;
-  // }
+  try {
+    const project = await database.Project.findOne({
+      where: { id: Number(projectId) },
+    });
+    if (project) {
+      const deletedProject = await project.update(newProject);
+      return deletedProject;
+    }
+    // THrow error ?
+    return null;
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {
   getAllProjects,
   getProjectsByUserId,
   removeProject,
+  addProject,
+  update,
 };

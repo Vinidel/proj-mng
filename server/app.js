@@ -4,7 +4,8 @@ const cors = require('cors');
 const express = require('express');
 const projectRoutes = require('./routes/projects');
 const userRoutes = require('./routes/users');
-const authorizationRoutes = require('./routes/authorization')
+const authorizationRoutes = require('./routes/authorization');
+const loggedIn = require('./middleware/loggedIn');
 
 const app = express();
 
@@ -32,8 +33,8 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/login', authorizationRoutes);
-app.use('/projects', projectRoutes);
-app.use('/users', userRoutes);
+app.use('/projects', loggedIn, projectRoutes);
+app.use('/users', loggedIn, userRoutes);
 
 // Error handling
 app.use((req, res, next) => {

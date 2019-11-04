@@ -40,10 +40,7 @@ async function removeUser(userId) {
       where: { id: Number(userId) },
     });
     if (user) {
-      const deletedUser = await database.User.destroy({
-        where: { id: Number(userId) },
-      });
-
+      const deletedUser = await user.destroy();
       return deletedUser;
     }
     // THrow error ?
@@ -66,23 +63,20 @@ async function createUser(user) {
 }
 
 
-async function update(projectId, newProject) {
-  // try {
-  //   const project = await database.Project.findOne({
-  //     where: { id: Number(projectId) },
-  //   });
-  //   if (project) {
-  //     const deletedProject = await database.Project.destroy({
-  //       where: { id: Number(projectId) },
-  //     });
-
-  //     return deletedProject;
-  //   }
-  //   // THrow error ?
-  //   return null;
-  // } catch (error) {
-  //   throw error;
-  // }
+async function update(userId, user) {
+  try {
+    const userDb = await database.User.findOne({
+      where: { id: Number(userId) },
+    });
+    if (user) {
+      const updatedUser = await userDb.update(user);
+      return updatedUser;
+    }
+    // THrow error ?
+    return null;
+  } catch (error) {
+    throw error;
+  }
 }
 
 module.exports = {
@@ -91,4 +85,5 @@ module.exports = {
   removeUser,
   createUser,
   getUserByEmail,
+  update,
 };

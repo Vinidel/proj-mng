@@ -6,3 +6,6 @@ Small SPA Project Management tool
 
 ## Connect to data base
  psql -d proj-mng -U fakeuser -p 5436 -h localhost
+
+ ## There is a bug in Sequelize
+ userId not being set to null on delete in Project

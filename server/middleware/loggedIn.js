@@ -10,7 +10,6 @@ function checkToken(req, res, next) {
     req.localUser = decoded;
     return next();
   } catch (error) {
-    console.log(error);
     return res.status(401).json(error);
   }
 }

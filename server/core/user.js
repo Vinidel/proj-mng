@@ -20,6 +20,45 @@ const canSave = () => ({
   },
 });
 
+const canCreateProject = () => ({
+  createProject: async (project) => {
+    const newProject = await projectService.addProject({ ...project });
+    return newProject;
+  },
+});
+
+const canUpdateProject = () => ({
+  updateProject: async (projectId, project) => {
+    const newProject = await projectService.update(projectId, project);
+    return newProject;
+  },
+});
+
+const canDeleteProject = () => ({
+  deleteProject: async (projectId) => {
+    const newProject = await projectService.removeProject(projectId);
+    return newProject;
+  },
+});
+
+const canUpdateUser = () => ({
+  updateUser: async (userId, user) => {
+    if (user.password) {
+      const encryptedPassword = await Security.makeSecurity().encrypt(user.password);
+      user.password = encryptedPassword;
+    }
+    const newUser = await userService.update(userId, user);
+    return newUser;
+  },
+});
+
+const canRemoveUser = () => ({
+  deleteUser: async (userId) => {
+    const deletedUser = await userService.removeUser(userId);
+    return deletedUser;
+  },
+});
+
 const Admin = (name, email, password, id) => {
   const self = {
     name,
@@ -29,7 +68,16 @@ const Admin = (name, email, password, id) => {
     id,
   };
 
-  return { ...self, ...canGetAllProjects(self), ...canSave(self) };
+  return {
+    ...self,
+    ...canGetAllProjects(self),
+    ...canSave(self),
+    ...canCreateProject(),
+    ...canUpdateProject(),
+    ...canUpdateUser(),
+    ...canDeleteProject(),
+    ...canRemoveUser(),
+  };
 };
 
 

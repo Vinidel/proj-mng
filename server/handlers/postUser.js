@@ -8,14 +8,13 @@ function isErrorFromValidation(error) {
 }
 
 function isErrorKnown(error) {
-  console.log('Error is', error)
   return userErrorCodes.includes(error.code);
 }
 
 async function postUser(req, res) {
   try {
     await userRequestSchema.validateAsync(req.body);
-    const newUser = await User.MakeUser(req.body).save(req.body);
+    const newUser = await User.MakeUser(req.localUser).save(req.body);
     return res.status(201).json(newUser);
   } catch (error) {
     if (isErrorFromValidation(error)) {

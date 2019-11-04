@@ -1,5 +1,6 @@
-'use strict';
+const sec = require('../../core/security');
 
+const s = sec.makeSecurity();
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.bulkInsert(
     'Users',
@@ -8,7 +9,7 @@ module.exports = {
         name: 'Vinny Admin',
         email: 'vini@admin.com',
         role: 'ADMIN',
-        password: 'fakepassword',
+        password: s.encrypt('fakepassword'),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
