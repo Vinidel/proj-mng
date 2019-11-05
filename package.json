@@ -4,6 +4,7 @@
   "description": "Small SPA to Manage Projects",
   "main": "index.js",
   "scripts": {
+    "start:server:db": "docker-compose up -d && npm run start:dev",
     "start:dev": "nodemon ./server/server.js",
     "test": "jest --config ./jest.config.js",
     "db:init": "sequelize init",
