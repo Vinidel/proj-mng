@@ -7,10 +7,7 @@ module.exports = (sequelize, DataTypes) => {
   // eslint-disable-next-line func-names
   Project.associate = function (models) {
     // associations can be defined here
-    Project.belongsTo(models.User, {
-      foreignKey: 'userId',
-      onDelete: 'SET NULL',
-    });
+    Project.belongsTo(models.User);
   };
   return Project;
 };

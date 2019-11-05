@@ -26,15 +26,15 @@ describe('Project service', () => {
   it('should call findAll with user id to find projects of specific user', async () => {
     const userId = '1';
     await projectService.getProjectsByUserId(userId);
-    expect(mockProjectsDB.findAll).toHaveBeenCalledWith({ where: { userId: Number(userId) } });
+    expect(mockProjectsDB.findAll).toHaveBeenCalledWith({ where: { UserId: Number(userId) } });
   });
 
   it('should remove project if project exists', async () => {
-    mockProjectsDB.findOne.mockResolvedValue({ name: 'A name' });
+    mockProjectsDB.findOne.mockResolvedValue(mockProjectsDB);
     const projectId = '1';
     await projectService.removeProject(projectId);
     expect(mockProjectsDB.findOne).toHaveBeenCalledWith({ where: { id: Number(projectId) } });
-    expect(mockProjectsDB.destroy).toHaveBeenCalledWith({ where: { id: Number(projectId) } });
+    expect(mockProjectsDB.destroy).toHaveBeenCalled();
   });
 
   it('should return null if project does not exist when removing it', async () => {

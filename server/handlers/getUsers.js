@@ -1,13 +1,13 @@
 const User = require('../core/user');
 
-async function getProjects(req, res) {
+async function getUsers(req, res) {
   try {
     const currentUser = User.MakeUser(req.localUser);
-    const projects = await currentUser.getProjects();
-    return res.status(200).json(projects);
+    const users = await currentUser.getUsers();
+    return res.status(200).json(users);
   } catch (error) {
     return res.status(500).json(error.message);
   }
 }
 
-module.exports = getProjects;
+module.exports = getUsers;

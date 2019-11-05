@@ -15,6 +15,10 @@ describe('Post user handler', () => {
 
   beforeEach(() => {
     mockRequest = {
+      localUser: {
+        name: 'Adminn Name',
+        role: 'ADMIN',
+      },
       body: {
         name: 'A name',
         email: 'test@g.com',
@@ -47,7 +51,7 @@ describe('Post user handler', () => {
   it('should instantiate user with body params', async () => {
     const res = mockResponse();
     await postUser(mockRequest, res);
-    expect(User.MakeUser).toHaveBeenCalledWith(mockRequest.body);
+    expect(User.MakeUser).toHaveBeenCalledWith(mockRequest.localUser);
   });
 
   it('should return 201 if User is created successfully', async () => {

@@ -5,6 +5,10 @@ const projectService = require('../services/projectService');
 const ADMIN_ROLE = 'ADMIN';
 const PM_ROLE = 'PROJECT_MANAGER';
 
+const canGetAllUsers = () => ({
+  getUsers: async () => userService.getUsers(),
+});
+
 const canGetAllProjects = () => ({
   getProjects: async () => projectService.getAllProjects(),
 });
@@ -77,6 +81,7 @@ const Admin = (name, email, password, id) => {
     ...canUpdateUser(),
     ...canDeleteProject(),
     ...canRemoveUser(),
+    ...canGetAllUsers(),
   };
 };
 

@@ -12,7 +12,8 @@
     "db:migrate": "sequelize db:migrate",
     "db:seed:user": "sequelize seed:generate --name User",
     "db:seed:project": "sequelize seed:generate --name Project",
-    "db:seed:all": "sequelize db:seed:all"
+    "db:seed:all": "sequelize db:seed:all",
+    "db:associations": "sequelize migration:generate --name add-associations"
   },
   "author": "Vinicius Delascio Fortunato",
   "license": "ISC",

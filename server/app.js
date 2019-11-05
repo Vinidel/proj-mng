@@ -20,7 +20,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 // Health check
-app.get('/sup', (req, res) => {
+app.get('/api/sup', (req, res) => {
   res.status(200).json({ message: 'Whats up' });
 });
 
@@ -32,9 +32,9 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/login', authorizationRoutes);
-app.use('/projects', loggedIn, projectRoutes);
-app.use('/users', loggedIn, userRoutes);
+app.use('/api/login', authorizationRoutes);
+app.use('/api/projects', loggedIn, projectRoutes);
+app.use('/api/users', loggedIn, userRoutes);
 
 // Error handling
 app.use((req, res, next) => {

@@ -21,7 +21,7 @@ async function getProjectsByUserId(userId) {
   try {
     const projects = await database.Project.findAll({
       where: {
-        userId: Number(userId),
+        UserId: Number(userId),
       },
     });
     return projects;

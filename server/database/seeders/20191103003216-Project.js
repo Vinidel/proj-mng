@@ -4,7 +4,7 @@ module.exports = {
     'Projects',
     [
       {
-        userId: 2,
+        UserId: 2,
         name: 'A great new project',
         description:
           'Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh.',
