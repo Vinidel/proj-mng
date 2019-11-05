@@ -12,7 +12,7 @@ async function patchProject(req, res) {
     await projectUpdateRequestSchema.validateAsync(req.body);
     const user = await User.MakeUser(req.localUser);
     const updatedProject = await user.updateProject(params.projectId, body);
-    return res.status(201).json(updatedProject);
+    return res.status(200).json(updatedProject);
   } catch (error) {
     if (isErrorFromValidation(error)) {
       return res.status(400).json(error);

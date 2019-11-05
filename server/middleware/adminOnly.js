@@ -1,7 +1,6 @@
 function checkAdmin(req, res, next) {
-  const adminRole = req.localUser.role;
-  console.log({ adminRole });
-  if (adminRole !== 'ADMIN') {
+  const { role } = req.localUser;
+  if (role !== 'ADMIN') {
     return res.status(401).json({ message: 'Unauthorized' });
   }
   return next();

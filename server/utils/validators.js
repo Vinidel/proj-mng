@@ -15,24 +15,24 @@ const authorizationSchema = Joi.object({
 const projectRequestSchema = Joi.object({
   name: Joi.string().required(),
   description: Joi.string().required(),
-  userId: Joi.number(),
+  UserId: Joi.number(),
 });
 
 const projectUpdateRequestSchema = Joi.object({
   name: Joi.string(),
   description: Joi.string(),
-  userId: Joi.number(),
-});
+  UserId: Joi.number(),
+}).min(1);
 
-const userUpdateeRequestSchema = Joi.object({
+const userUpdateRequestSchema = Joi.object({
   email: Joi.string(),
   password: Joi.string(),
-});
+}).min(1);
 
 module.exports = {
   userRequestSchema,
   authorizationSchema,
   projectRequestSchema,
   projectUpdateRequestSchema,
-  userUpdateeRequestSchema,
+  userUpdateRequestSchema,
 };

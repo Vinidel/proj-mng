@@ -1,15 +1,14 @@
-const getProjects = require('./getProjects');
+const deleteProject = require('./deleteProject');
 const User = require('../core/user');
 
 const INTERNAL_SERVER_ERROR = 500;
 const SUCCESS_HTTP_RESPONSE = 200;
 
 jest.mock('../core/user');
-describe('Get projects handler', () => {
+describe('Delete project handler', () => {
   let mockRequest;
   let mockResponse;
   let mockCurrentUser;
-  let mockedProjects;
 
   beforeEach(() => {
     mockRequest = {
@@ -17,19 +16,15 @@ describe('Get projects handler', () => {
         name: 'Adminn Name',
         role: 'ADMIN',
       },
+      params: {
+        projectId: 1,
+      },
     };
-    mockedProjects = [{
-      name: 'Project one',
-      id: 1,
-    },
-    {
-      name: 'Project two',
-      id: 2,
-    }];
+
     mockCurrentUser = {
       name: 'A name',
       email: 'test@g.com',
-      getProjects: jest.fn().mockResolvedValue(mockedProjects),
+      deleteProject: jest.fn().mockResolvedValue(),
     };
 
     mockResponse = () => {
@@ -49,26 +44,26 @@ describe('Get projects handler', () => {
 
   it('should instantiate user with body params', async () => {
     const res = mockResponse();
-    await getProjects(mockRequest, res);
+    await deleteProject(mockRequest, res);
     expect(User.MakeUser).toHaveBeenCalledWith(mockRequest.localUser);
   });
 
   it('should return 200 if success', async () => {
     const res = mockResponse();
-    await getProjects(mockRequest, res);
+    await deleteProject(mockRequest, res);
     expect(res.status).toHaveBeenCalledWith(SUCCESS_HTTP_RESPONSE);
   });
 
-  it('should return projects if success', async () => {
+  it('should call empty res.json if success', async () => {
     const res = mockResponse();
-    await getProjects(mockRequest, res);
-    expect(res.json).toHaveBeenCalledWith(mockedProjects);
+    await deleteProject(mockRequest, res);
+    expect(res.json).toHaveBeenCalledWith({});
   });
 
   it('should return 500 if there is an error', async () => {
-    mockCurrentUser.getProjects = jest.fn().mockRejectedValue({ error: 'Weird' });
+    mockCurrentUser.deleteProject = jest.fn().mockRejectedValue({ error: 'Weird' });
     const res = mockResponse();
-    await getProjects(mockRequest, res);
+    await deleteProject(mockRequest, res);
     expect(res.status).toHaveBeenCalledWith(INTERNAL_SERVER_ERROR);
   });
 });

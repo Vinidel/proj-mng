@@ -1,15 +1,16 @@
-const getProjects = require('./getProjects');
+const getUsers = require('./getUsers');
 const User = require('../core/user');
 
+const BAD_REQUEST_HTTP_RESPONSE = 400;
 const INTERNAL_SERVER_ERROR = 500;
 const SUCCESS_HTTP_RESPONSE = 200;
 
 jest.mock('../core/user');
-describe('Get projects handler', () => {
+describe('Get users handler', () => {
   let mockRequest;
   let mockResponse;
   let mockCurrentUser;
-  let mockedProjects;
+  let mockedUsers;
 
   beforeEach(() => {
     mockRequest = {
@@ -18,18 +19,18 @@ describe('Get projects handler', () => {
         role: 'ADMIN',
       },
     };
-    mockedProjects = [{
-      name: 'Project one',
+    mockedUsers = [{
+      name: 'User one',
       id: 1,
     },
     {
-      name: 'Project two',
+      name: 'User two',
       id: 2,
     }];
     mockCurrentUser = {
       name: 'A name',
       email: 'test@g.com',
-      getProjects: jest.fn().mockResolvedValue(mockedProjects),
+      getUsers: jest.fn().mockResolvedValue(mockedUsers),
     };
 
     mockResponse = () => {
@@ -49,26 +50,26 @@ describe('Get projects handler', () => {
 
   it('should instantiate user with body params', async () => {
     const res = mockResponse();
-    await getProjects(mockRequest, res);
+    await getUsers(mockRequest, res);
     expect(User.MakeUser).toHaveBeenCalledWith(mockRequest.localUser);
   });
 
   it('should return 200 if success', async () => {
     const res = mockResponse();
-    await getProjects(mockRequest, res);
+    await getUsers(mockRequest, res);
     expect(res.status).toHaveBeenCalledWith(SUCCESS_HTTP_RESPONSE);
   });
 
-  it('should return projects if success', async () => {
+  it('should return users if success', async () => {
     const res = mockResponse();
-    await getProjects(mockRequest, res);
-    expect(res.json).toHaveBeenCalledWith(mockedProjects);
+    await getUsers(mockRequest, res);
+    expect(res.json).toHaveBeenCalledWith(mockedUsers);
   });
 
   it('should return 500 if there is an error', async () => {
-    mockCurrentUser.getProjects = jest.fn().mockRejectedValue({ error: 'Weird' });
+    mockCurrentUser.getUsers = jest.fn().mockRejectedValue({ error: 'Weird' });
     const res = mockResponse();
-    await getProjects(mockRequest, res);
+    await getUsers(mockRequest, res);
     expect(res.status).toHaveBeenCalledWith(INTERNAL_SERVER_ERROR);
   });
 });
