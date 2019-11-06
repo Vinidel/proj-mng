@@ -1,6 +1,31 @@
 # proj-mng
 Small SPA Project Management tool
 
+## Instrunctions
+ - `npm install`
+ - `docker-compose up -d`
+ - `npm run db:migrate`
+ - `npm run db:seed:all`
+ - `npm run start:dev`
+
+This will create two users
+```
+  Admin
+  user: vini@admin.com
+  password: fakepassword
+```
+
+```
+  Project Manager 
+  user: vini@pm.com
+  password: fakepassword
+```
+
+## To test the api directly go to the routes section and use those users to login into the api
+```
+Apart from login all other endpoints are authenticate, and some of them can only be accessed by and Admin useer
+```
+
 ## Dependencies
  - NodeJs
  - Docker
