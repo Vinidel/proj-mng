@@ -133,3 +133,4 @@ Small SPA Project Management tool
  - User response has password on it
  - Because of a bug UserId is Uppercase in json response
  - Needs more logs
+ - Store roles in database and provide them via api
