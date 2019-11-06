@@ -17,7 +17,7 @@ module.exports = {
         name: 'Vinny PM',
         email: 'vini@pm.com',
         role: 'PROJECT_MANAGER',
-        password: 'fakepassword',
+        password: s.encrypt('fakepassword'),
         createdAt: new Date(),
         updatedAt: new Date(),
       },
